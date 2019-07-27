@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 const { publicVapidKey, privateVapidKey, webPushContact } = require('./config');
 const app = express();
 
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'development';
 
 /**
  * CORS
