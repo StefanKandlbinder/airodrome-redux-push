@@ -104,4 +104,4 @@ app.post('/notifications/subscribe', (req, res) => {
     }, 30000); */
 });
 
-app.listen(9000, () => console.log('The server has been started on the port 9000'))
+app.listen(3000, () => console.log('The server has been started on the port 9000'))
