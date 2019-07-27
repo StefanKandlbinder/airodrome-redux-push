@@ -10,21 +10,21 @@ const app = express();
  * CORS
  */
 var allowedOrigins = ['http://localhost:3000',
-                      'http://localhost:5000',
-                      'http://yourapp.com'];
+    'http://localhost:5000',
+    'https://badairday.netlify.com/'];
 app.use(cors({
-  origin: function(origin, callback){
-    // allow requests with no origin 
-    // (like mobile apps or curl requests)
-    if(!origin) return callback(null, true);
+    origin: function (origin, callback) {
+        // allow requests with no origin 
+        // (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
 
-    if(allowedOrigins.indexOf(origin) === -1){
-      var msg = 'The CORS policy for this site does not ' +
+        if (allowedOrigins.indexOf(origin) === -1) {
+            var msg = 'The CORS policy for this site does not ' +
                 'allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
     }
-    return callback(null, true);
-  }
 }));
 
 /**
@@ -35,8 +35,8 @@ app.use(bodyParser.json())
 /**
  * WEB PUSH
  */
-webpush.setVapidDetails(webPushContact, 
-    publicVapidKey, 
+webpush.setVapidDetails(webPushContact,
+    publicVapidKey,
     privateVapidKey);
 
 /**
@@ -53,26 +53,37 @@ app.get('/notifications/send', (req, res) => {
     })
 
     fetch('https://badairday22.firebaseio.com/subscriptions.json')
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
-        .then(function(myJson) {
+        .then(function (myJson) {
             let subscriptions = Object.entries(myJson);
 
-            subscriptions.map(subscription => {                
+            subscriptions.map(subscription => {
                 webpush.sendNotification(subscription[1].subscription, payload)
                     .then(result => console.log(result))
-                    .catch(e => console.log(e.stack))
+                    .catch(e => {
+                        switch (e.statusCode) {
+                            // if the subscription is invalid, delete it
+                            case 410:
+                                fetch(`https://badairday22.firebaseio.com/subscriptions/${subscription[0]}.json`, {
+                                    method: 'DELETE'
+                                })
+                                    .then(res => res.json())
+                                    .then(response => {
+                                        console.log("Deleted Subscription: ", subscription[0]);
+                                    })
+                                    .catch(err => console.log(err))
+                                break;
+                            default:
+                                break;
+                        }
+                    })
             })
 
-            // res.send(myJson);
             res.status(200).json({ 'success': true });
         })
-        .catch(err => {console.log(err)});
-
-    /* webpush.sendNotification(subscription, payload)
-        .then(result => console.log(result))
-        .catch(e => console.log(e.stack)) */
+        .catch(err => { console.log(err) });
 })
 
 /**
@@ -93,12 +104,6 @@ app.post('/notifications/subscribe', (req, res) => {
         .catch(e => console.log(e.stack))
 
     res.status(200).json({ 'success': true })
-
-    /* setInterval(() => {
-        webpush.sendNotification(subscription, payload)
-            .then(result => console.log(result))
-            .catch(e => console.log(e.stack))
-    }, 30000); */
 });
 
-app.listen(3000, () => console.log('The server has been started on the port 3000'))
+app.listen(9000, () => console.log('The server has been started on the port 9000'))
