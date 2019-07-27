@@ -35,7 +35,6 @@ app.use(bodyParser.json())
 /**
  * WEB PUSH
  */
-console.log("PUBLIC VAPID KEY: ", publicVapidKey, process.env);
 webpush.setVapidDetails(webPushContact,
     publicVapidKey,
     privateVapidKey);
