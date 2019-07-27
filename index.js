@@ -1,11 +1,12 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const webpush = require('web-push')
-const fetch = require('node-fetch')
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const webpush = require('web-push');
+const fetch = require('node-fetch');
 const { publicVapidKey, privateVapidKey, webPushContact } = require('./config');
+const app = express();
 
-const app = express()
+process.env.NODE_ENV = 'production';
 
 /**
  * CORS
