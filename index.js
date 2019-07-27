@@ -47,11 +47,6 @@ app.get('/', (req, res) => {
 })
 
 app.get('/notifications/send', (req, res) => {
-    const payload = JSON.stringify({
-        title: 'Hallo, willkommen bei BadAirDay!',
-        body: 'Bei Grenzwertüberschreitungen erhalten Sie eine Benachrichtigung.',
-    })
-
     fetch('https://badairday22.firebaseio.com/subscriptions.json')
         .then(function (response) {
             return response.json();
@@ -60,6 +55,14 @@ app.get('/notifications/send', (req, res) => {
             let subscriptions = Object.entries(myJson);
 
             subscriptions.map(subscription => {
+                const payload = JSON.stringify({
+                    title: `BadAirday Alarm!`,
+                    body: `An der Station ${subscription[1].notifiedStations[0].name} wurde der Grenzwert überschritten`,
+                    icon: 'icons/push-256x256.png',
+                    data: {
+                        url: `https://badairday.netlify.com/station/${subscription[1].notifiedStations[0].provider}/${subscription[1].notifiedStations[0].id}`
+                    }
+                })
                 webpush.sendNotification(subscription[1].subscription, payload)
                     .then(result => console.log(result))
                     .catch(e => {
