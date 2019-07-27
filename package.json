@@ -1,4 +1,7 @@
 {
+  "name": "bad-airday-push",
+  "version": "0.0.1",
+  "description": "BadAirDay Push Server",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
