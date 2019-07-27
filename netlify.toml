@@ -1,2 +1,2 @@
 [build]
-  command = "npm build && npm start"
+  command = "npm install && npm start"
