@@ -1,13 +1,11 @@
 const express = require('express')
-// const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const webpush = require('web-push')
 const fetch = require('node-fetch')
+const { publicVapidKey, privateVapidKey, webPushContact } = require('./config');
 
 const app = express()
-
-// dotenv.config()
 
 /**
  * CORS
@@ -38,9 +36,9 @@ app.use(bodyParser.json())
 /**
  * WEB PUSH
  */
-webpush.setVapidDetails(process.env.WEB_PUSH_CONTACT, 
-    process.env.PUBLIC_VAPID_KEY, 
-    process.env.PRIVATE_VAPID_KEY);
+webpush.setVapidDetails(webPushContact, 
+    publicVapidKey, 
+    privateVapidKey);
 
 /**
  * GET
