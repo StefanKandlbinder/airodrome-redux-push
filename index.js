@@ -1,5 +1,5 @@
 const express = require('express')
-const dotenv = require('dotenv')
+// const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const webpush = require('web-push')
@@ -7,7 +7,7 @@ const fetch = require('node-fetch')
 
 const app = express()
 
-dotenv.config()
+// dotenv.config()
 
 /**
  * CORS
