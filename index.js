@@ -12,8 +12,8 @@ const app = express();
 var allowedOrigins = ['http://localhost:3000',
     'http://localhost:5000',
     'https://badairday.netlify.com/'];
-
-/* app.use(cors({
+    
+app.use(cors({
     origin: function (origin, callback) {
         // allow requests with no origin 
         // (like mobile apps or curl requests)
@@ -26,7 +26,7 @@ var allowedOrigins = ['http://localhost:3000',
         }
         return callback(null, true);
     }
-})); */
+}));
 
 /**
  * JSON
@@ -40,14 +40,7 @@ webpush.setVapidDetails(webPushContact,
     publicVapidKey,
     privateVapidKey);
 
-/**
- * GET
- */
-app.get('/', (req, res) => {
-    res.send('Hello world!')
-})
-
-app.get('/notifications/send', (req, res) => {
+function sendNotifications() {
     fetch('https://badairday22.firebaseio.com/subscriptions.json')
         .then(function (response) {
             return response.json();
@@ -84,10 +77,20 @@ app.get('/notifications/send', (req, res) => {
                         }
                     })
             })
-
-            res.status(200).json({ 'success': true });
         })
         .catch(err => { console.log(err) });
+}
+
+/**
+ * GET
+ */
+app.get('/', (req, res) => {
+    res.send('Hello world!');
+})
+
+app.get('/notifications/send', (req, res) => {
+    res.send('Sending Notifications');
+    sendNotifications();
 })
 
 /**
