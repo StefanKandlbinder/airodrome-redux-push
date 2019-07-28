@@ -4,7 +4,7 @@
   "description": "BadAirDay Push Server",
   "main": "index.js",
   "scripts": {
-    "build": "build express",
+    "build": "npm install && npm start",
     "start_local": "node -r dotenv/config index.js",
     "start": "node index.js"
   },
