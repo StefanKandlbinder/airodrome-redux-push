@@ -78,8 +78,8 @@ function sendNotifications() {
                     })
             })
         })
-        .catch(err => { console.log(err) }); */
-}
+        .catch(err => { console.log(err) });
+} */
 
 /**
  * GET
