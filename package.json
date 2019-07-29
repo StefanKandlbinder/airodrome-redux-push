@@ -4,6 +4,7 @@
   "description": "BadAirDay Push Server",
   "main": "index.js",
   "scripts": {
+    "build": "npm install",
     "start_local": "node -r dotenv/config index.js",
     "start": "node index.js"
   },

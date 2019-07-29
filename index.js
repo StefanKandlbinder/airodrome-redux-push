@@ -90,9 +90,9 @@ function sendNotifications() {
 /**
  * GET
  */
-/* app.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Hello world!');
-}) */
+})
 
 app.get('/notifications/send', (req, res) => {
     res.send('Sending Notifications');
