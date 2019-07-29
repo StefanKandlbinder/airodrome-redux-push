@@ -5,6 +5,7 @@ const webpush = require('web-push');
 const fetch = require('node-fetch');
 const { publicVapidKey, privateVapidKey, webPushContact } = require('./config');
 const app = express();
+const port = process.env.PORT || 3000;
 
 /**
  * STATIC CONTENT
@@ -17,7 +18,7 @@ app.use(express.static('public'));
 var allowedOrigins = ['http://localhost:3000',
     'http://localhost:5000',
     'https://badairday.netlify.com/'];
-    
+
 app.use(cors({
     origin: function (origin, callback) {
         // allow requests with no origin 
@@ -91,13 +92,18 @@ function sendNotifications() {
  * GET
  */
 app.get('/', (req, res) => {
-    res.send('Hello world!');
-})
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.write('<h1>Hello from Express.js!</h1>');
+    res.end();
+});
 
-app.get('/notifications/send', (req, res) => {
-    res.send('Sending Notifications');
+router.get('/notifications/send', (req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.write('<h1>Sending Notifications</h1>');
+    res.end();
+
     sendNotifications();
-})
+});
 
 /**
  * POST
@@ -119,4 +125,4 @@ app.post('/notifications/subscribe', (req, res) => {
     res.status(200).json({ 'success': true })
 });
 
-app.listen(9000, () => console.log('The server has been started on the port 9000'))
+app.listen(port, () => console.log('The server has been started on the port 9000'))
