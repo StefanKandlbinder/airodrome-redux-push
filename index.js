@@ -1,9 +1,9 @@
 const express = require('express');
-/* const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const webpush = require('web-push');
 const fetch = require('node-fetch');
-const { publicVapidKey, privateVapidKey, webPushContact } = require('./config'); */
+const { publicVapidKey, privateVapidKey, webPushContact } = require('./config');
 const app = express();
 
 /**
