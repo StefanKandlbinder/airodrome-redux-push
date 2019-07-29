@@ -97,7 +97,7 @@ app.get('/', (req, res) => {
     res.end();
 });
 
-router.get('/notifications/send', (req, res) => {
+app.get('/notifications/send', (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.write('<h1>Sending Notifications</h1>');
     res.end();
