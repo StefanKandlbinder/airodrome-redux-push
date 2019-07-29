@@ -9,12 +9,12 @@ const app = express();
 /**
  * STATIC CONTENT
  */
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
 /**
  * CORS
  */
-/* var allowedOrigins = ['http://localhost:3000',
+var allowedOrigins = ['http://localhost:3000',
     'http://localhost:5000',
     'https://badairday.netlify.com/'];
     
@@ -31,17 +31,17 @@ app.use(cors({
         }
         return callback(null, true);
     }
-})); */
+}));
 
 /**
  * JSON
  */
-// app.use(bodyParser.json())
+app.use(bodyParser.json())
 
 /**
  * WEB PUSH
  */
-/* webpush.setVapidDetails(webPushContact,
+webpush.setVapidDetails(webPushContact,
     publicVapidKey,
     privateVapidKey);
 
@@ -85,7 +85,7 @@ function sendNotifications() {
 
         })
         .catch(err => { console.log(err) });
-} */
+}
 
 /**
  * GET
@@ -94,15 +94,15 @@ app.get('/', (req, res) => {
     res.send('Hello world!');
 })
 
-/* app.get('/notifications/send', (req, res) => {
+app.get('/notifications/send', (req, res) => {
     res.send('Sending Notifications');
     sendNotifications();
-}) */
+})
 
 /**
  * POST
  */
-/* app.post('/notifications/subscribe', (req, res) => {
+app.post('/notifications/subscribe', (req, res) => {
     const subscription = req.body;
 
     console.log("Subscription: ", subscription);
@@ -117,6 +117,6 @@ app.get('/', (req, res) => {
         .catch(e => console.log(e.stack))
 
     res.status(200).json({ 'success': true })
-}); */
+});
 
 app.listen(9000, () => console.log('The server has been started on the port 9000'))
