@@ -9,7 +9,7 @@ const app = express();
 /**
  * STATIC CONTENT
  */
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 /**
  * CORS
